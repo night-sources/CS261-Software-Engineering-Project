@@ -2,7 +2,6 @@ package com.airportsim.model;
 
 import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
-
 import java.util.List;
 
 public class SimulationEngine implements SnapshotFactory {

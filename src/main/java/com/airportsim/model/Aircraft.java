@@ -1,7 +1,7 @@
 package com.airportsim.model;
 
-import com.airportsim.viewmodel.SnapshotFactory;
 import com.airportsim.viewmodel.Snapshot;
+import com.airportsim.viewmodel.SnapshotFactory;
 
 public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     private String callsign;

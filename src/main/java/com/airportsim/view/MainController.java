@@ -5,7 +5,6 @@ import com.airportsim.model.SimulationEngine;
 import com.airportsim.model.SimulationEvent;
 import com.airportsim.model.SimulationEventListener;
 import com.airportsim.viewmodel.WorldState;
-
 import java.io.File;
 
 public class MainController implements SimulationEventListener {
@@ -17,9 +16,13 @@ public class MainController implements SimulationEventListener {
     public void loadConfig(File runwayFile, File configFile) {}
 
     public void onStartClicked() {}
+
     public void onStopClicked() {}
+
     public void onPauseClicked() {}
+
     public void onResumeClicked() {}
+
     public void onRunwayConfigChanged(int runwayId, OperationalStatus status) {}
 
     @Override
