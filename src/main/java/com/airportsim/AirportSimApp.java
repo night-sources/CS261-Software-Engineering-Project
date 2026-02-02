@@ -1,5 +1,6 @@
 package com.airportsim;
 
+import com.airportsim.view.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
