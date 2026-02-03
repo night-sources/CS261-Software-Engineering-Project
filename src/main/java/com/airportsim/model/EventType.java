@@ -1,0 +1,12 @@
+package com.airportsim.model;
+
+public enum EventType {
+    ARRIVAL,
+    TAKEOFF_JOIN_QUEUE,
+    LANDING_SUCCESS,
+    TAKEOFF_SUCCESS,
+    DIVERSION_FUEL,
+    CANCELLATION_TIMEOUT,
+    RUNWAY_MODE_CHANGE,
+    RUNWAY_STATUS_CHANGE
+}
