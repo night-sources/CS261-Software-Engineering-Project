@@ -1,0 +1,20 @@
+.container {
+    -fx-background-color: #0a2a47;
+    -fx-alignment: center;
+    -fx-padding: 40;
+}
+
+.button {
+    -fx-background-color: #0074d9;
+    -fx-text-fill: #fff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 16 40;
+    -fx-effect: dropshadow(gaussian, #003366, 8, 0.2, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #00bfff;
+}
