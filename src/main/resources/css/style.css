@@ -1,5 +1,17 @@
-.container {
+.container { /* Main container for the background, alignment, padding */
     -fx-background-color: #0a2a47;
+    -fx-alignment: center;
+    -fx-padding: 40;
+}
+
+
+
+/* Main menu container with background image */
+.container-main-menu {
+    -fx-background-image: url("../images/main_menu_bg.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
     -fx-alignment: center;
     -fx-padding: 40;
 }
@@ -12,7 +24,6 @@
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-padding: 16 40;
-    -fx-effect: dropshadow(gaussian, #003366, 8, 0.2, 0, 2);
 }
 
 .button:hover {
@@ -27,7 +38,6 @@
     -fx-border-radius: 16px;
     -fx-background-radius: 8px;
     -fx-padding: 16 100;
-    -fx-effect: dropshadow(gaussian, #003366, 8, 0.2, 0, 2);
 }
 
 .quit-button:hover {
@@ -35,8 +45,9 @@
 }
 
 .title {
-    -fx-font-size: 48px;
+    -fx-font-size: 64px;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
     -fx-padding: 0 0 20 0;
 }
