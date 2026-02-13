@@ -5,7 +5,7 @@
 }
 
 .button {
-    -fx-background-color: #0074d9;
+    -fx-background-color: #00a80e;
     -fx-text-fill: #fff;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
@@ -16,5 +16,27 @@
 }
 
 .button:hover {
-    -fx-background-color: #00bfff;
+    -fx-background-color: #008b3f;
+}
+
+.quit-button {
+    -fx-background-color: #c91a1a;
+    -fx-text-fill: #fff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 8px;
+    -fx-padding: 16 100;
+    -fx-effect: dropshadow(gaussian, #003366, 8, 0.2, 0, 2);
+}
+
+.quit-button:hover {
+    -fx-background-color: #a30909;
+}
+
+.title {
+    -fx-font-size: 48px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 0;
 }
