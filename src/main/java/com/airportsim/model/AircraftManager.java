@@ -29,6 +29,18 @@ public class AircraftManager implements Tickable, SnapshotFactory {
         this.outboundTimer = 0;
     }
 
+    /**
+     * Convenience constructor for simpler wiring.
+     * Creates default HoldingPattern and TakeoffQueue.
+     */
+    public AircraftManager(RunwayManager runwayManager) {
+        this(
+                runwayManager,
+                new HoldingPattern(new EmergencyTimeComparator()),
+                new TakeoffQueue()
+        );
+    }
+
     public void spawnInbound() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
