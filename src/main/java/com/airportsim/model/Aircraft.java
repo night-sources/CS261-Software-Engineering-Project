@@ -1,18 +1,22 @@
 package com.airportsim.model;
 
+import com.airportsim.viewmodel.AircraftSnapshot;
 import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
 
 public class Aircraft implements SimulationEventSubject, SnapshotFactory {
-    private String callsign;
-    private String operator;
-    private String origin;
-    private String destination;
-    private double groundSpeed; // using double for decimal precision
+    private final String callsign;
+    private final String operator;
+    private final String origin;
+    private final String destination;
+    private final double groundSpeed;
+    private final long scheduledTime;
+    private final boolean inbound;
+
     private float altitude;
     private long fuelRemaining;
     private EmergencyStatus status;
-    private long scheduledTime; // need to consider for arrival and departure
+    private long actualTime;
 
     public Aircraft(
             String callsign,
@@ -21,24 +25,36 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
             String destination,
             long fuelRemaining,
             EmergencyStatus status,
-            long scheduledTime) {
+            long scheduledTime,
+            long actualTime,
+            boolean inbound) {
         this.callsign = callsign;
         this.operator = operator;
         this.origin = origin;
         this.destination = destination;
-        this.groundSpeed = 180;
-        this.altitude = 2000;
+        this.groundSpeed = 180.0;
+        this.altitude = 2000.0f;
         this.fuelRemaining = fuelRemaining;
         this.status = status;
         this.scheduledTime = scheduledTime;
+        this.actualTime = actualTime;
+        this.inbound = inbound;
     }
 
-    // newly added method for HoldingPattern.java
     public long getFuelRemaining() {
         return fuelRemaining;
     }
 
-    // newly added method for EmergencyTimeComparator.java
+    /**
+     * @param amount the amount of fuel to subtract from aircraft's holding
+     */
+    public void consumeFuel(long amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Fuel consumption amount cannot be negative");
+        }
+        this.fuelRemaining = Math.max(0, this.fuelRemaining - amount);
+    }
+
     public EmergencyStatus getStatus() {
         return status;
     }
@@ -47,25 +63,76 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
         this.status = status;
     }
 
-    public void consumeFuel(long amount) {
-        this.fuelRemaining -= amount;
-    }
-
     public void declareEmergency(EmergencyStatus status) {
         this.status = status;
     }
 
-    // *data type changed to long
-    public long getWaitTime(long currentTick) {
-        return currentTick - scheduledTime;
+    public boolean isEmergency() {
+        return status != EmergencyStatus.NONE;
     }
 
-    public boolean isEmergency() {
-        return status == EmergencyStatus.FUEL_LOW
-                || status == EmergencyStatus.MECHANICAL
-                || status == EmergencyStatus.PASSENGER_HEALTH;
+    /**
+     * We assume that an aircraft will immediately end up in one of the `AircraftQueue`s upon
+     * creation
+     *
+     * @param currentTick active tick of the simulation
+     * @return the total time the aircraft has spent waiting since actual creation
+     */
+    public long getWaitTime(long currentTick) {
+        return currentTick - actualTime;
+    }
+
+    public long getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public long getActualTime() {
+        return actualTime;
+    }
+
+    public String getCallsign() {
+        return callsign;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public double getGroundSpeed() {
+        return groundSpeed;
+    }
+
+    public float getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(float altitude) {
+        this.altitude = altitude;
+    }
+
+    public boolean isInbound() {
+        return inbound;
     }
 
     @Override
-    public Snapshot getSnapshot() {}
+    public Snapshot getSnapshot() {
+        return new AircraftSnapshot(
+                callsign,
+                operator,
+                origin,
+                destination,
+                fuelRemaining,
+                status,
+                scheduledTime,
+                actualTime,
+                inbound);
+    }
 }
