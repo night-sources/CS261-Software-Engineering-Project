@@ -32,7 +32,6 @@ public class AirportSimApp extends Application {
             stage.setTitle("Load Scenario Page"); // CHANGE WITH A STAGE.SETSCENE() CALL TO THE ACTUAL LOAD SCENARIO PAGE ONCE IT'S BUILT
         });
 
-        
         Button loadResultsButton = new Button("Load Previous Results"); // Load previous results button setup
         loadResultsButton.getStyleClass().add("button");
         loadResultsButton.setOnAction(event -> {
