@@ -1,5 +1,7 @@
 package com.airportsim;
 
+import com.airportsim.view.configuration.*;
+
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,37 +24,39 @@ public class AirportSimApp extends Application {
     public void start(Stage stage) {
         // --- BUTTON SETUP ---
         Button startButton = new Button("Start New Scenario");
-        startButton.getStyleClass().add("button");
+        startButton.getStyleClass().add("button-success");
         startButton.setOnAction(
                 event -> {
                     stage.setTitle(
-                            "Configuration Page"); // CHANGE WITH A STAGE.SETSCENE() CALL TO THE
-                    // ACTUAL LOAD SCENARIO PAGE ONCE IT'S BUILT
+                            "Configuration Page");
+                    ConfigurationPage configurationPage = new ConfigurationPage(stage);
+                    stage.getScene().setRoot(configurationPage);
                 });
 
         Button loadScenarioButton =
                 new Button("Load Previous Scenario"); // Load scenario button setup
-        loadScenarioButton.getStyleClass().add("button");
+        loadScenarioButton.getStyleClass().add("button-success");
         loadScenarioButton.setOnAction(
                 event -> {
                     stage.setTitle(
-                            "Load Scenario Page"); // CHANGE WITH A STAGE.SETSCENE() CALL TO THE
-                    // ACTUAL LOAD SCENARIO PAGE ONCE IT'S BUILT
+                            "Load Scenario Page");
+                    LoadScenarioPage loadScenarioPage = new LoadScenarioPage(stage);
+                    stage.getScene().setRoot(loadScenarioPage);
                 });
 
         Button loadResultsButton =
                 new Button("Load Previous Results"); // Load previous results button setup
-        loadResultsButton.getStyleClass().add("button");
+        loadResultsButton.getStyleClass().add("button-success");
         loadResultsButton.setOnAction(
                 event -> {
                     stage.setTitle(
-                            "Load Previous Results Page"); // CHANGE WITH A STAGE.SETSCENE() CALL TO
-                    // THE ACTUAL LOAD SCENARIO PAGE ONCE
-                    // IT'S BUILT
+                            "Load Previous Results Page");
+                    LoadResultsPage loadResultsPage = new LoadResultsPage(stage);
+                    stage.getScene().setRoot(loadResultsPage);
                 });
 
         Button quitButton = new Button("Quit Simulation"); // Quit button setup
-        quitButton.getStyleClass().add("quit-button");
+        quitButton.getStyleClass().add("button-quit");
         quitButton.setOnAction(
                 event -> {
                     stage.close();
