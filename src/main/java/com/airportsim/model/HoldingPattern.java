@@ -18,7 +18,6 @@ public class HoldingPattern {
     public void add(Aircraft aircraft) {
         // Add the aircraft to the priority queue
         holdingQueue.add(aircraft);
-
     }
 
     public Aircraft poll() {
@@ -33,10 +32,10 @@ public class HoldingPattern {
     public List<Aircraft> removeExpired() {
         // if fuelRemaining = 10 minutes, remove plane from queue(flight diverted)
         List<Aircraft> diverted = new ArrayList<>();
-        
+
         Iterator<Aircraft> it = holdingQueue.iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Aircraft aircraft = it.next();
 
             if (aircraft.getFuelRemaining() <= 10) {
@@ -49,7 +48,7 @@ public class HoldingPattern {
     }
 
     public void updatePriority(Aircraft aircraft) {
-        // Delete the aircraft from queue and insert it back 
+        // Delete the aircraft from queue and insert it back
         // So that the queue is properly prioritised
         holdingQueue.remove(aircraft);
         aircraft.consumeFuel(10); // 3.3.2 Design Document "Constant rate per tick" BUT what value?
@@ -57,7 +56,7 @@ public class HoldingPattern {
         if (aircraft.getFuelRemaining() <= 10) {
             aircraft.setStatus(EmergencyStatus.FUEL_LOW);
         }
-        
+
         holdingQueue.add(aircraft);
     }
 }

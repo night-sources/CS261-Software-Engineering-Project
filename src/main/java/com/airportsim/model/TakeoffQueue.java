@@ -31,8 +31,8 @@ public class TakeoffQueue {
         List<Aircraft> cancelled = new ArrayList<>();
 
         Iterator<Aircraft> it = takeoffQueue.iterator();
-        
-        while(it.hasNext()) {
+
+        while (it.hasNext()) {
             Aircraft aircraft = it.next();
 
             if (aircraft.getWaitTime(currentTick) >= maxWait) {

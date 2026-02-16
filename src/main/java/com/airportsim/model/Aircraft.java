@@ -3,8 +3,6 @@ package com.airportsim.model;
 import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
 
-import javafx.scene.SnapshotParameters;
-
 public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     private String callsign;
     private String operator;
@@ -16,7 +14,14 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     private EmergencyStatus status;
     private long scheduledTime; // need to consider for arrival and departure
 
-    public Aircraft(String callsign, String operator, String origin, String destination, long fuelRemaining, EmergencyStatus status, long scheduledTime) {
+    public Aircraft(
+            String callsign,
+            String operator,
+            String origin,
+            String destination,
+            long fuelRemaining,
+            EmergencyStatus status,
+            long scheduledTime) {
         this.callsign = callsign;
         this.operator = operator;
         this.origin = origin;
@@ -41,7 +46,7 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     public void setStatus(EmergencyStatus status) {
         this.status = status;
     }
-    
+
     public void consumeFuel(long amount) {
         this.fuelRemaining -= amount;
     }
@@ -50,19 +55,17 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
         this.status = status;
     }
 
-    // *data type changed to long 
+    // *data type changed to long
     public long getWaitTime(long currentTick) {
         return currentTick - scheduledTime;
     }
 
     public boolean isEmergency() {
-        return status == EmergencyStatus.FUEL_LOW 
-            || status == EmergencyStatus.MECHANICAL
-            || status == EmergencyStatus.PASSENGER_HEALTH;
+        return status == EmergencyStatus.FUEL_LOW
+                || status == EmergencyStatus.MECHANICAL
+                || status == EmergencyStatus.PASSENGER_HEALTH;
     }
 
     @Override
-    public Snapshot getSnapshot() {
-        
-    }
+    public Snapshot getSnapshot() {}
 }
