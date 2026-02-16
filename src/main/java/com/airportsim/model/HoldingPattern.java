@@ -1,18 +1,17 @@
 package com.airportsim.model;
 
-// import java.util.List;
-// import java.util.Queue;
-// import java.util.PriorityQueue;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Queue;
+ import java.util.PriorityQueue;
 
-import java.util.*;
-
-public class HoldingPattern {
+public class HoldingPattern implements AircraftQueue {
     private Queue<Aircraft> holdingQueue;
     private EmergencyTimeComparator comparator;
 
-    public HoldingPattern() {
-        this.comparator = new EmergencyTimeComparator();
-        this.holdingQueue = new PriorityQueue<Aircraft>(comparator);
+    public HoldingPattern(EmergencyTimeComparator comparator) {
+        this.comparator = comparator;
+        this.holdingQueue = new PriorityQueue<Aircraft>(this.comparator);
     }
 
     public void add(Aircraft aircraft) {
@@ -24,12 +23,11 @@ public class HoldingPattern {
         return holdingQueue.poll();
     }
 
-    // Newly added method to ease testing
     public int size() {
         return holdingQueue.size();
     }
 
-    public List<Aircraft> removeExpired() {
+    public List<Aircraft> removeExpired(int maxWait) {
         // if fuelRemaining = 10 minutes, remove plane from queue(flight diverted)
         List<Aircraft> diverted = new ArrayList<>();
 
