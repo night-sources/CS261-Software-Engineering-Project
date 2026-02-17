@@ -6,7 +6,6 @@ import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
 import com.airportsim.viewmodel.StatisticsSnapshot;
 import com.airportsim.viewmodel.WorldState;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -54,9 +53,8 @@ public class SimulationEngine implements SnapshotFactory {
     }
 
     /**
-     * Starts the simulation loop. This method blocks and should be called
-     * from a dedicated worker thread, not the UI thread
-     * The loop continues until `stop()` is called
+     * Starts the simulation loop. This method blocks and should be called from a dedicated worker
+     * thread, not the UI thread The loop continues until `stop()` is called
      */
     public void run() {
         isRunning = true;
@@ -83,24 +81,19 @@ public class SimulationEngine implements SnapshotFactory {
         }
     }
 
-    /**
-     * Stops the simulation loop. The loop will exit after completing
-     * the current iteration.
-     */
+    /** Stops the simulation loop. The loop will exit after completing the current iteration. */
     public void stop() {
         isRunning = false;
     }
 
-    /**
-     * Returns whether the simulation loop is currently running.
-     */
+    /** Returns whether the simulation loop is currently running. */
     public boolean isRunning() {
         return isRunning;
     }
 
     /**
-     * Executes a single simulation tick. Called internally by run(),
-     * but can also be called directly for manual stepping or testing
+     * Executes a single simulation tick. Called internally by run(), but can also be called
+     * directly for manual stepping or testing
      */
     public void update() {
         // Step 1: Process/execute pending commands from UI
@@ -123,14 +116,14 @@ public class SimulationEngine implements SnapshotFactory {
     }
 
     /**
-     * Returns the most recent snapshot for UI rendering
-     * Thread-safe: can be called from the UI thread while simulation runs
+     * Returns the most recent snapshot for UI rendering Thread-safe: can be called from the UI
+     * thread while simulation runs
      */
     public WorldState getLatestSnapshot() {
         return latestSnapshot.get();
     }
 
-     // Creates a new WorldState snapshot of the current simulation state (helper for clarity)
+    // Creates a new WorldState snapshot of the current simulation state (helper for clarity)
     private WorldState createWorldState() {
         AircraftsSnapshot aircraftSnapshot = (AircraftsSnapshot) aircraftManager.getSnapshot();
         RunwaysSnapshot runwaysSnapshot = (RunwaysSnapshot) runwayManager.getSnapshot();
@@ -178,6 +171,7 @@ public class SimulationEngine implements SnapshotFactory {
 
     /**
      * Sets the interval between ticks in milliseconds
+     *
      * @param intervalMs milliseconds between ticks. Use 0 for maximum speed
      */
     public void setTickIntervalMs(long intervalMs) {

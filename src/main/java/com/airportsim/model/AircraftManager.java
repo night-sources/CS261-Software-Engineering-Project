@@ -30,15 +30,10 @@ public class AircraftManager implements Tickable, SnapshotFactory {
     }
 
     /**
-     * Convenience constructor for simpler wiring.
-     * Creates default HoldingPattern and TakeoffQueue.
+     * Convenience constructor for simpler wiring. Creates default HoldingPattern and TakeoffQueue.
      */
     public AircraftManager(RunwayManager runwayManager) {
-        this(
-                runwayManager,
-                new HoldingPattern(new EmergencyTimeComparator()),
-                new TakeoffQueue()
-        );
+        this(runwayManager, new HoldingPattern(new EmergencyTimeComparator()), new TakeoffQueue());
     }
 
     public void spawnInbound() {

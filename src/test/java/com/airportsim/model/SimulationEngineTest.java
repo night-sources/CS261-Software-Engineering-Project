@@ -1,12 +1,12 @@
 package com.airportsim.model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.airportsim.viewmodel.WorldState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SimulationEngineTest {
 
@@ -38,7 +38,8 @@ class SimulationEngineTest {
             engine.stop();
             simThread.join(1000);
 
-            assertTrue(engine.getCurrentTick() > 0,
+            assertTrue(
+                    engine.getCurrentTick() > 0,
                     "Expected currentTick to be incremented, but was " + engine.getCurrentTick());
         }
 
@@ -56,8 +57,8 @@ class SimulationEngineTest {
             engine.stop();
             simThread.join(1000);
 
-            assertEquals(0, engine.getCurrentTick(),
-                    "Expected currentTick to remain 0 when paused");
+            assertEquals(
+                    0, engine.getCurrentTick(), "Expected currentTick to remain 0 when paused");
         }
 
         @Test
@@ -93,7 +94,8 @@ class SimulationEngineTest {
 
             long ticks = engine.getCurrentTick();
             // Allow some tolerance for timing imprecision
-            assertTrue(ticks >= 4 && ticks <= 7,
+            assertTrue(
+                    ticks >= 4 && ticks <= 7,
                     "Expected ~5 ticks in 275ms at 50ms interval, but got " + ticks);
         }
     }
@@ -142,11 +144,11 @@ class SimulationEngineTest {
 
             WorldState snapshot = engine.getLatestSnapshot();
             // Snapshot tick should be close to currentTick (might be off by 1 due to timing)
-            assertTrue(Math.abs(snapshot.tick() - engine.getCurrentTick()) <= 1,
+            assertTrue(
+                    Math.abs(snapshot.tick() - engine.getCurrentTick()) <= 1,
                     "Snapshot tick should match currentTick");
         }
     }
-
 
     @Nested
     @DisplayName("Pause and Resume")
@@ -221,7 +223,8 @@ class SimulationEngineTest {
             engine.stop();
             simThread.join(1000);
 
-            assertTrue(engine.getCurrentTick() > 50,
+            assertTrue(
+                    engine.getCurrentTick() > 50,
                     "Expected many ticks at max speed, but got " + engine.getCurrentTick());
         }
 
