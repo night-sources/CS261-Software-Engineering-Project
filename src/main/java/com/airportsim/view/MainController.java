@@ -1,32 +1,58 @@
 package com.airportsim.view;
 
+import com.airportsim.model.EmergencyStatus;
 import com.airportsim.model.OperationalStatus;
+import com.airportsim.model.RunwayMode;
 import com.airportsim.model.SimulationEngine;
 import com.airportsim.model.SimulationEvent;
 import com.airportsim.model.SimulationEventListener;
 import com.airportsim.viewmodel.WorldState;
-import java.io.File;
 
 public class MainController implements SimulationEventListener {
-    private SimulationEngine engine;
-    private SimulationRenderer renderer;
+    private final SimulationEngine engine;
+    private final SimulationRenderer renderer;
 
-    public MainController() {}
+    public MainController(SimulationEngine engine, SimulationRenderer renderer) {
+        this.engine = engine;
+        this.renderer = renderer;
+    }
 
-    public void loadConfig(File runwayFile, File configFile) {}
+    public void onStartClicked() {
+        engine.setPaused(false);
+    }
 
-    public void onStartClicked() {}
+    public void onStopClicked() {
+        engine.setPaused(true);
+    }
 
-    public void onStopClicked() {}
+    public void onPauseClicked() {
+        engine.setPaused(true);
+    }
 
-    public void onPauseClicked() {}
+    public void onResumeClicked() {
+        engine.setPaused(false);
+    }
 
-    public void onResumeClicked() {}
+    public void onRunwayOpStatusChanged(int runwayId, OperationalStatus status) {
+        engine.setRunwayOpStatus(runwayId, status);
+    }
 
-    public void onRunwayConfigChanged(int runwayId, OperationalStatus status) {}
+    public void onRunwayModeChanged(int runwayId, RunwayMode mode) {
+        engine.setRunwayMode(runwayId, mode);
+    }
+
+    public void onEmergencyDeclared(String callsign, EmergencyStatus emergency) {
+        engine.setEmergencyStatus(callsign, emergency);
+    }
 
     @Override
     public void onEvent(SimulationEvent event) {}
 
-    public void updateView(WorldState view) {}
+    public void updateView(WorldState state) {
+        renderer.render(state);
+    }
+
+    public SimulationEngine getEngine() {
+        return engine;
+    }
 }
