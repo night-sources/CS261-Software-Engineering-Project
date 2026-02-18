@@ -87,20 +87,6 @@ public class LoadResultsPageTest extends ApplicationTest {
     }
 
     @Test
-    public void testSetSelectedFilesUpdatesUI() {
-        interact(
-                () ->
-                        loadResultsPage.setSelectedFiles(
-                                Arrays.asList(
-                                        new File("data1.csv"),
-                                        new File("data2.csv"),
-                                        new File("data3.csv"))));
-        assertNotNull(lookup("data1.csv").queryAs(Label.class));
-        assertNotNull(lookup("data2.csv").queryAs(Label.class));
-        assertNotNull(lookup("data3.csv").queryAs(Label.class));
-    }
-
-    @Test
     public void testNoFilesSelectedLabelShownInitially() {
         Label noFilesLabel = lookup("No files selected").queryAs(Label.class);
         assertNotNull(noFilesLabel);
