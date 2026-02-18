@@ -1,15 +1,21 @@
 package com.airportsim.view.configuration;
 
+import com.airportsim.view.MainController;
 import com.airportsim.view.MainMenuPage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -23,9 +29,10 @@ public class LoadResultsPage extends BorderPane {
     private Stage stage;
     private VBox fileListContainer;
     private List<File> selectedFiles = new ArrayList<>();
+    private MainController controller;
 
-    public LoadResultsPage(Stage stage) {
-        this.stage = stage;
+    public LoadResultsPage(MainController controller) {
+        this.controller = controller;
         this.getStyleClass().add("container");
         setCenter(createMainContent());
     }
@@ -174,7 +181,7 @@ public class LoadResultsPage extends BorderPane {
         backButton.setOnAction(
                 e -> {
                     stage.setTitle("Airport Traffic Studio");
-                    stage.getScene().setRoot(new MainMenuPage(stage));
+                    controller.getRootPane().getScene().setRoot(new MainMenuPage(controller));
                 });
 
         Button loadButton = new Button("View Results");
