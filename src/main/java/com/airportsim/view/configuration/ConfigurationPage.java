@@ -1,17 +1,28 @@
 package com.airportsim.view.configuration;
 
+import com.airportsim.view.MainController;
 import com.airportsim.view.MainMenuPage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Spinner;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /** Creates the main scenario configuration page where users can set parameters for the sim. */
 public class ConfigurationPage extends BorderPane {
     private Stage stage;
+    private MainController controller;
 
     private Spinner<Integer> inboundFlowSpinner;
     private Spinner<Integer> outboundFlowSpinner;
@@ -22,8 +33,8 @@ public class ConfigurationPage extends BorderPane {
     private VBox runwayListContainer;
     private List<RunwayConfig> runways = new ArrayList<>();
 
-    public ConfigurationPage(Stage stage) {
-        this.stage = stage;
+    public ConfigurationPage(MainController controller) {
+        this.controller = controller;
         this.getStyleClass().add("container");
         setCenter(createMainContent());
     }
@@ -226,7 +237,7 @@ public class ConfigurationPage extends BorderPane {
         backButton.setOnAction(
                 e -> {
                     stage.setTitle("Airport Traffic Studio");
-                    stage.getScene().setRoot(new MainMenuPage(stage));
+                    controller.getRootPane().getScene().setRoot(new MainMenuPage(controller));
                 });
 
         Button startButton = new Button("Start Simulation");
