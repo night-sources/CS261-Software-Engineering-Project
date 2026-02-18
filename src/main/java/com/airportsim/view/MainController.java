@@ -7,11 +7,8 @@ import com.airportsim.model.SimulationEngine;
 import com.airportsim.model.SimulationEvent;
 import com.airportsim.model.SimulationEventListener;
 import com.airportsim.viewmodel.WorldState;
-
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-
 
 public class MainController implements SimulationEventListener {
     private final SimulationEngine engine;
@@ -19,18 +16,16 @@ public class MainController implements SimulationEventListener {
     private final MainMenuPage mainMenu;
     private final Stage stage;
 
-
     public MainController(SimulationEngine engine, SimulationRenderer renderer, Stage stage) {
         this.engine = engine;
         this.renderer = renderer;
-        this.stage =  stage;
+        this.stage = stage;
         this.mainMenu = new MainMenuPage(this);
     }
 
-    public Pane getRootPane(){
+    public Pane getRootPane() {
         return mainMenu;
     }
-
 
     public void onStartClicked() {
         engine.setPaused(false);

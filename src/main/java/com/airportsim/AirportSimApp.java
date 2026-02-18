@@ -9,12 +9,9 @@ import com.airportsim.model.StatisticsManager;
 import com.airportsim.model.TakeoffQueue;
 import com.airportsim.view.MainController;
 import com.airportsim.view.SimulationRenderer;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
 
 public class AirportSimApp extends Application {
     /**
@@ -23,24 +20,23 @@ public class AirportSimApp extends Application {
      *
      * @param stage The stage for the JavaFX application (the main window)
      */
-
     private MainController controller;
 
     @Override
     public void start(Stage stage) {
         // Needed for aircraft manager
         EmergencyTimeComparator comparator = new EmergencyTimeComparator();
-        HoldingPattern holdingPattern = new HoldingPattern(comparator);        
+        HoldingPattern holdingPattern = new HoldingPattern(comparator);
         TakeoffQueue takeoffQueue = new TakeoffQueue();
 
-
-        //Needed for simulation engine
-        RunwayManager runwayManager =  new RunwayManager();
+        // Needed for simulation engine
+        RunwayManager runwayManager = new RunwayManager();
         StatisticsManager statisticsManager = new StatisticsManager();
-        AircraftManager aircraftManager =  new AircraftManager(runwayManager, holdingPattern, takeoffQueue);
+        AircraftManager aircraftManager =
+                new AircraftManager(runwayManager, holdingPattern, takeoffQueue);
 
-
-        SimulationEngine engine = new SimulationEngine(aircraftManager, runwayManager, statisticsManager);
+        SimulationEngine engine =
+                new SimulationEngine(aircraftManager, runwayManager, statisticsManager);
         SimulationRenderer renderer = new SimulationRenderer();
 
         controller = new MainController(engine, renderer, stage);

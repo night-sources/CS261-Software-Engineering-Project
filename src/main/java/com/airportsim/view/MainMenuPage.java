@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainMenuPage extends StackPane {
@@ -18,7 +17,7 @@ public class MainMenuPage extends StackPane {
 
     public MainMenuPage(MainController controller) {
 
-        this.controller = controller; 
+        this.controller = controller;
 
         // --- BUTTON SETUP ---
         Button startButton = new Button("Start New Scenario");
@@ -31,13 +30,11 @@ public class MainMenuPage extends StackPane {
 
         Button loadResultsButton = new Button("Load Previous Results");
         loadResultsButton.getStyleClass().add("button-success");
-        loadResultsButton.setOnAction(
-                event -> controller.onLoadResultsClicked());
+        loadResultsButton.setOnAction(event -> controller.onLoadResultsClicked());
 
         Button quitButton = new Button("Quit Simulation");
         quitButton.getStyleClass().add("button-quit");
         quitButton.setOnAction(event -> controller.onQuitClicked());
-        
 
         double buttonWidth = 350;
         startButton.setPrefWidth(buttonWidth);
