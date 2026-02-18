@@ -1,10 +1,20 @@
 package com.airportsim;
 
-import com.airportsim.view.MainMenuPage;
+import com.airportsim.model.AircraftManager;
+import com.airportsim.model.EmergencyTimeComparator;
+import com.airportsim.model.HoldingPattern;
+import com.airportsim.model.RunwayManager;
+import com.airportsim.model.SimulationEngine;
+import com.airportsim.model.StatisticsManager;
+import com.airportsim.model.TakeoffQueue;
 import com.airportsim.view.MainController;
+import com.airportsim.view.SimulationRenderer;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+
 
 public class AirportSimApp extends Application {
     /**
@@ -13,23 +23,33 @@ public class AirportSimApp extends Application {
      *
      * @param stage The stage for the JavaFX application (the main window)
      */
-    @Override
-    public void start(Stage stage) {
-        MainMenuPage mainMenu = new MainMenuPage(stage);
-        Scene entryScene = new Scene(mainMenu, 1280, 720);
-        entryScene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-        stage.setScene(entryScene);
-        stage.setTitle("Airport Traffic Studio");
-        stage.show();
 
     private MainController controller;
 
     @Override
     public void start(Stage stage) {
-        // TODO: Composition root - wire up all dependencies
-        controller = createController();
+        // Needed for aircraft manager
+        EmergencyTimeComparator comparator = new EmergencyTimeComparator();
+        HoldingPattern holdingPattern = new HoldingPattern(comparator);        
+        TakeoffQueue takeoffQueue = new TakeoffQueue();
 
-        // JavaFX UI initialisation will go here
+
+        //Needed for simulation engine
+        RunwayManager runwayManager =  new RunwayManager();
+        StatisticsManager statisticsManager = new StatisticsManager();
+        AircraftManager aircraftManager =  new AircraftManager(runwayManager, holdingPattern, takeoffQueue);
+
+
+        SimulationEngine engine = new SimulationEngine(aircraftManager, runwayManager, statisticsManager);
+        SimulationRenderer renderer = new SimulationRenderer();
+
+        controller = new MainController(engine, renderer, stage);
+        Scene scene = new Scene(controller.getRootPane(), 1280, 720);
+        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.setTitle("Airport Traffic Studio");
+        stage.show();
     }
 
     /** Composition root: creates and wires all dependencies. */

@@ -13,7 +13,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainMenuPage extends StackPane {
-    public MainMenuPage(Stage stage) {
+
+    private final MainController controller;
+
+    public MainMenuPage(MainController controller) {
+
+        this.controller = controller; 
         // --- BUTTON SETUP ---
         Button startButton = new Button("Start New Scenario");
         startButton.getStyleClass().add("button-success");
