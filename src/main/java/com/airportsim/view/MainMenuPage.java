@@ -19,37 +19,25 @@ public class MainMenuPage extends StackPane {
     public MainMenuPage(MainController controller) {
 
         this.controller = controller; 
+
         // --- BUTTON SETUP ---
         Button startButton = new Button("Start New Scenario");
         startButton.getStyleClass().add("button-success");
-        startButton.setOnAction(
-                event -> {
-                    stage.setTitle("Configuration Page");
-                    ConfigurationPage configurationPage = new ConfigurationPage(stage);
-                    stage.getScene().setRoot(configurationPage);
-                });
+        startButton.setOnAction(event -> controller.onStartClicked());
 
         Button loadScenarioButton = new Button("Load Previous Scenario");
         loadScenarioButton.getStyleClass().add("button-success");
-        loadScenarioButton.setOnAction(
-                event -> {
-                    stage.setTitle("Load Scenario Page");
-                    LoadScenarioPage loadScenarioPage = new LoadScenarioPage(stage);
-                    stage.getScene().setRoot(loadScenarioPage);
-                });
+        loadScenarioButton.setOnAction(event -> controller.onLoadScenarioClicked());
 
         Button loadResultsButton = new Button("Load Previous Results");
         loadResultsButton.getStyleClass().add("button-success");
         loadResultsButton.setOnAction(
-                event -> {
-                    stage.setTitle("Load Previous Results Page");
-                    LoadResultsPage loadResultsPage = new LoadResultsPage(stage);
-                    stage.getScene().setRoot(loadResultsPage);
-                });
+                event -> controller.onLoadResultsClicked());
 
         Button quitButton = new Button("Quit Simulation");
         quitButton.getStyleClass().add("button-quit");
-        quitButton.setOnAction(event -> stage.close());
+        quitButton.setOnAction(event -> controller.onQuitClicked());
+        
 
         double buttonWidth = 350;
         startButton.setPrefWidth(buttonWidth);
