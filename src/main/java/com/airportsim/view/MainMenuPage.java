@@ -1,6 +1,6 @@
 package com.airportsim.view;
 
-import com.airportsim.view.configuration.*;
+import com.airportsim.view.listeners.MainMenuListener;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,29 +12,27 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class MainMenuPage extends StackPane {
+    private final MainMenuListener listener;
 
-    private final MainController controller;
-
-    public MainMenuPage(MainController controller) {
-
-        this.controller = controller;
+    public MainMenuPage(MainMenuListener listener) {
+        this.listener = listener;
 
         // --- BUTTON SETUP ---
         Button startButton = new Button("Start New Scenario");
         startButton.getStyleClass().add("button-success");
-        startButton.setOnAction(event -> controller.onStartClicked());
+        startButton.setOnAction(event -> listener.onStartNewScenario());
 
         Button loadScenarioButton = new Button("Load Previous Scenario");
         loadScenarioButton.getStyleClass().add("button-success");
-        loadScenarioButton.setOnAction(event -> controller.onLoadScenarioClicked());
+        loadScenarioButton.setOnAction(event -> listener.onLoadPreviousScenario());
 
         Button loadResultsButton = new Button("Load Previous Results");
         loadResultsButton.getStyleClass().add("button-success");
-        loadResultsButton.setOnAction(event -> controller.onLoadResultsClicked());
+        loadResultsButton.setOnAction(event -> listener.onLoadPreviousResults());
 
         Button quitButton = new Button("Quit Simulation");
         quitButton.getStyleClass().add("button-quit");
-        quitButton.setOnAction(event -> controller.onQuitClicked());
+        quitButton.setOnAction(event -> listener.onQuit());
 
         double buttonWidth = 350;
         startButton.setPrefWidth(buttonWidth);

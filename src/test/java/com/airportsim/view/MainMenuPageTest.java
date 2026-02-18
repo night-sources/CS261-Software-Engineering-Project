@@ -2,11 +2,8 @@ package com.airportsim.view;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.airportsim.view.configuration.ConfigurationPage;
-import com.airportsim.view.configuration.LoadResultsPage;
-import com.airportsim.view.configuration.LoadScenarioPage;
+import com.airportsim.view.listeners.MainMenuListener;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
@@ -18,24 +15,47 @@ import org.testfx.framework.junit5.Start;
 @ExtendWith(ApplicationExtension.class)
 public class MainMenuPageTest extends ApplicationTest {
     private Stage stage;
+    private boolean startNewScenarioCalled = false;
+    private boolean loadPreviousScenarioCalled = false;
+    private boolean loadPreviousResultsCalled = false;
+    private boolean quitCalled = false;
 
     @Start
     public void start(Stage stage) {
         this.stage = stage;
-        MainMenuPage mainMenu = new MainMenuPage(stage);
+
+        MainMenuListener mockListener =
+                new MainMenuListener() {
+                    @Override
+                    public void onStartNewScenario() {
+                        startNewScenarioCalled = true;
+                    }
+
+                    @Override
+                    public void onLoadPreviousScenario() {
+                        loadPreviousScenarioCalled = true;
+                    }
+
+                    @Override
+                    public void onLoadPreviousResults() {
+                        loadPreviousResultsCalled = true;
+                    }
+
+                    @Override
+                    public void onQuit() {
+                        quitCalled = true;
+                        stage.close();
+                    }
+                };
+
+        MainMenuPage mainMenu = new MainMenuPage(mockListener);
         Scene scene = new Scene(mainMenu, 1280, 720);
         stage.setScene(scene);
-        stage.setTitle("Airport Traffic Studio");
         stage.show();
     }
 
     @Test
-    public void testInitialWindowTitle() {
-        assertEquals("Airport Traffic Studio", stage.getTitle());
-    }
-
-    @Test
-    public void testButtonsExist() {
+    public void testAllButtonsExist() {
         assertNotNull(lookup("Start New Scenario").queryButton());
         assertNotNull(lookup("Load Previous Scenario").queryButton());
         assertNotNull(lookup("Load Previous Results").queryButton());
@@ -49,51 +69,31 @@ public class MainMenuPageTest extends ApplicationTest {
     }
 
     @Test
-    public void testStartButtonChangesTitle() {
-        Button startButton = lookup("Start New Scenario").queryButton();
-        clickOn(startButton);
-        assertEquals("Configuration Page", stage.getTitle());
+    public void testStartNewScenarioCallsListener() {
+        assertFalse(startNewScenarioCalled);
+        clickOn(lookup("Start New Scenario").queryButton());
+        assertTrue(startNewScenarioCalled);
     }
 
     @Test
-    public void testLoadScenarioButtonChangesTitle() {
-        Button loadScenarioButton = lookup("Load Previous Scenario").queryButton();
-        clickOn(loadScenarioButton);
-        assertEquals("Load Scenario Page", stage.getTitle());
+    public void testLoadPreviousScenarioCallsListener() {
+        assertFalse(loadPreviousScenarioCalled);
+        clickOn(lookup("Load Previous Scenario").queryButton());
+        assertTrue(loadPreviousScenarioCalled);
     }
 
     @Test
-    public void testLoadResultsButtonChangesTitle() {
-        Button loadResultsButton = lookup("Load Previous Results").queryButton();
-        clickOn(loadResultsButton);
-        assertEquals("Load Previous Results Page", stage.getTitle());
+    public void testLoadPreviousResultsCallsListener() {
+        assertFalse(loadPreviousResultsCalled);
+        clickOn(lookup("Load Previous Results").queryButton());
+        assertTrue(loadPreviousResultsCalled);
     }
 
     @Test
-    public void testQuitButtonClosesStage() {
-        Button quitButton = lookup("Quit Simulation").queryButton();
-        clickOn(quitButton);
+    public void testQuitCallsListenerAndClosesStage() {
+        assertFalse(quitCalled);
+        clickOn(lookup("Quit Simulation").queryButton());
+        assertTrue(quitCalled);
         assertFalse(stage.isShowing());
-    }
-
-    @Test
-    public void testStartButtonChangesToConfigurationPage() {
-        Button startButton = lookup("Start New Scenario").queryButton();
-        clickOn(startButton);
-        assertTrue(stage.getScene().getRoot() instanceof ConfigurationPage);
-    }
-
-    @Test
-    public void testLoadScenarioButtonChangesToLoadScenarioPage() {
-        Button loadScenarioButton = lookup("Load Previous Scenario").queryButton();
-        clickOn(loadScenarioButton);
-        assertTrue(stage.getScene().getRoot() instanceof LoadScenarioPage);
-    }
-
-    @Test
-    public void testLoadResultsButtonChangesToLoadResultsPage() {
-        Button loadResultsButton = lookup("Load Previous Results").queryButton();
-        clickOn(loadResultsButton);
-        assertTrue(stage.getScene().getRoot() instanceof LoadResultsPage);
     }
 }
