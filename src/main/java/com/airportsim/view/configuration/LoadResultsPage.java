@@ -1,7 +1,6 @@
 package com.airportsim.view.configuration;
 
-import com.airportsim.view.MainController;
-import com.airportsim.view.MainMenuPage;
+import com.airportsim.view.listeners.ConfigurationListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  * Creates the page where users can load previous sim results from CSV files. Just shows a file
@@ -26,13 +23,12 @@ import javafx.stage.Stage;
  * <p>TODO: Once a file is selected, parse it with the previous results stats on display.
  */
 public class LoadResultsPage extends BorderPane {
-    private Stage stage;
     private VBox fileListContainer;
     private List<File> selectedFiles = new ArrayList<>();
-    private MainController controller;
+    private final ConfigurationListener listener;
 
-    public LoadResultsPage(MainController controller) {
-        this.controller = controller;
+    public LoadResultsPage(ConfigurationListener listener) {
+        this.listener = listener;
         this.getStyleClass().add("container");
         setCenter(createMainContent());
     }
@@ -107,7 +103,7 @@ public class LoadResultsPage extends BorderPane {
         Button browseButton = new Button("Browse Files...");
         browseButton.getStyleClass().add("button-secondary");
         browseButton.setPrefWidth(200);
-        browseButton.setOnAction(e -> handleBrowse());
+        browseButton.setOnAction(e -> listener.onBrowseFiles(this));
 
         dropZone.getChildren().addAll(dropLabel, browseButton);
 
@@ -122,15 +118,7 @@ public class LoadResultsPage extends BorderPane {
         return panel;
     }
 
-    private void handleBrowse() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Result Files");
-        fileChooser
-                .getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-
-        // create list from the selected files and display them in the container
-        List<File> files = fileChooser.showOpenMultipleDialog(stage);
+    public void setSelectedFiles(List<File> files) {
         if (files != null && !files.isEmpty()) {
             selectedFiles.clear();
             selectedFiles.addAll(files);
@@ -180,8 +168,7 @@ public class LoadResultsPage extends BorderPane {
         backButton.setPrefWidth(180);
         backButton.setOnAction(
                 e -> {
-                    stage.setTitle("Airport Traffic Studio");
-                    controller.getRootPane().getScene().setRoot(new MainMenuPage(controller));
+                    listener.onBackToMainMenu();
                 });
 
         Button loadButton = new Button("View Results");
@@ -190,8 +177,7 @@ public class LoadResultsPage extends BorderPane {
         loadButton.setOnAction(
                 e -> {
                     if (!selectedFiles.isEmpty()) {
-                        // do something with selectedFiles
-                        stage.setTitle("Results Page");
+                        listener.onLoadResults(selectedFiles);
                     }
                 });
 
