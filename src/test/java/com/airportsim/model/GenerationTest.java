@@ -1,13 +1,16 @@
 package com.airportsim.model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -34,7 +37,7 @@ class GenerationTest {
                     "BCN",
                     "DUB",
                     "EDI",
-                    AircraftGeneration.OUR_AIRPORT);
+                    AircraftGeneration.home_airport);
 
     @Nested
     @DisplayName("generateInbound")
@@ -59,7 +62,7 @@ class GenerationTest {
                             DURATION_60, FLOW_15, FLOW_15, EMERGENCY_PROB, false, SEED);
             List<AircraftGeneration.FlightRow> inbound = gen.generateInbound();
             for (AircraftGeneration.FlightRow row : inbound) {
-                assertEquals(AircraftGeneration.OUR_AIRPORT, row.destination());
+                assertEquals(AircraftGeneration.home_airport, row.destination());
                 assertTrue(row.inbound());
                 assertEquals("arrival", row.flightType());
             }
@@ -116,7 +119,7 @@ class GenerationTest {
                             DURATION_60, FLOW_15, FLOW_15, EMERGENCY_PROB, false, SEED);
             List<AircraftGeneration.FlightRow> outbound = gen.generateOutbound();
             for (AircraftGeneration.FlightRow row : outbound) {
-                assertEquals(AircraftGeneration.OUR_AIRPORT, row.origin());
+                assertEquals(AircraftGeneration.home_airport, row.origin());
                 assertFalse(row.inbound());
                 assertEquals("departure", row.flightType());
             }
