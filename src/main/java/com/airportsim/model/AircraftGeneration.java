@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Random;
 
 public class AircraftGeneration {
-    public static final String OUR_AIRPORT = "COV";
-    private static final String[] AIRPORTS = {
+    public static final String home_airport = "COV";
+    private static final String[] airports = {
         "LHR", "JFK", "DXB", "SIN", "USA", "FRA", "CDG", "AMS", "MAD", "BCN", "DUB", "EDI"
     };
 
-    private static final Operator[] OPERATORS = {
+    private static final Operator[] operators = {
         new Operator("Cathay Pacific", "CX"),
         new Operator("Lufthansa", "LH"),
         new Operator("British Airways", "BA"),
@@ -38,7 +38,7 @@ public class AircraftGeneration {
 
     private static final String csv_header =
             "callsign,operator,origin,destination,scheduled_time_minutes,actual_time_minutes,"
-                    + "fuel_remaining_minutes,emergency_status,altitude,ground_speed,inbound,flight_type";
+                    + "fuel_remaining_minutes,emergency_status,altitude,ground_speed_knots,inbound,flight_type";
 
     private static final String flight_type_arrival = "arrival";
     private static final String flight_type_departure = "departure";
@@ -117,8 +117,8 @@ public class AircraftGeneration {
 
         Operator operator = pickRandomOperator();
         String callsign = buildCallsign(operator.code());
-        String origin = inbound ? pickRandomAirport() : OUR_AIRPORT;
-        String destination = inbound ? OUR_AIRPORT : pickRandomAirport();
+        String origin = inbound ? pickRandomAirport() : home_airport;
+        String destination = inbound ? home_airport : pickRandomAirport();
         String flightType = inbound ? flight_type_arrival : flight_type_departure;
 
         return new FlightRow(
@@ -137,11 +137,11 @@ public class AircraftGeneration {
     }
 
     private Operator pickRandomOperator() {
-        return OPERATORS[random.nextInt(OPERATORS.length)];
+        return operators[random.nextInt(operators.length)];
     }
 
     private String pickRandomAirport() {
-        return AIRPORTS[random.nextInt(AIRPORTS.length)];
+        return airports[random.nextInt(airports.length)];
     }
 
     private String buildCallsign(String operatorCode) {
