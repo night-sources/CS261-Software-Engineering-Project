@@ -5,6 +5,9 @@ import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
 
 public class Aircraft implements SimulationEventSubject, SnapshotFactory {
+    public static final float default_altitude = 2000.0f;
+    public static final double default_ground_speed = 180.0;
+
     private final String callsign;
     private final String operator;
     private final String origin;
@@ -32,8 +35,8 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
         this.operator = operator;
         this.origin = origin;
         this.destination = destination;
-        this.groundSpeed = 180.0;
-        this.altitude = 2000.0f;
+        this.groundSpeed = default_ground_speed;
+        this.altitude = default_altitude;
         this.fuelRemaining = fuelRemaining;
         this.status = status;
         this.scheduledTime = scheduledTime;
