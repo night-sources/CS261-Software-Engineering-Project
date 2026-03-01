@@ -19,6 +19,9 @@ public class RunwayManager implements Tickable, SnapshotFactory {
     }
 
     public void addRunway(Runway runway) {
+        if (runway == null) {
+            throw new IllegalArgumentException("Runway cannot be null");
+        }
         runways.add(runway);
     }
 
@@ -29,18 +32,20 @@ public class RunwayManager implements Tickable, SnapshotFactory {
      * @param aircraft the aircraft to attempt to land
      * @return false if all compatible runways are busy
      */
-    public boolean allocateRunway(Aircraft aircraft) {
+    public boolean allocateRunway(Aircraft aircraft, long currentTick) {
         boolean needsLanding = aircraft.isInbound();
         RunwayMode preferredMode = needsLanding ? RunwayMode.LANDING : RunwayMode.TAKEOFF;
 
         for (Runway runway : runways) {
             if (runway.isAvailable() && runway.getMode() == preferredMode) {
+                runway.occupy(aircraft, currentTick);
                 return true;
             }
         }
 
         for (Runway runway : runways) {
             if (runway.isAvailable() && runway.getMode() == RunwayMode.MIXED) {
+                runway.occupy(aircraft, currentTick);
                 return true;
             }
         }
@@ -48,19 +53,32 @@ public class RunwayManager implements Tickable, SnapshotFactory {
         return false;
     }
 
-    public void setRunwayStatus(int id, OperationalStatus status) {
+    public void setRunwayStatus(long id, OperationalStatus status) {
         runways.stream()
                 .filter(r -> r.getId() == id)
                 .findFirst()
                 .ifPresent(r -> r.setStatus(status));
     }
 
-    public void setRunwayMode(int id, RunwayMode mode) {
+    public void setRunwayMode(long id, RunwayMode mode) {
         runways.stream().filter(r -> r.getId() == id).findFirst().ifPresent(r -> r.setMode(mode));
     }
 
     public List<Runway> getRunways() {
         return runways;
+    }
+
+    public Runway getRunwayById(long id) {
+        if (runways == null) {
+            return null;
+        }
+
+        for (Runway runway: runways) {
+            if (runway.getId() == id)
+                return runway;
+        }
+
+        return null;
     }
 
     @Override

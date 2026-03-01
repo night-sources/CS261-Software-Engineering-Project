@@ -44,7 +44,13 @@ public class HoldingPattern implements AircraftQueue {
         while (it.hasNext()) {
             Aircraft aircraft = it.next();
             // Divert if fuel is critically low (10 minutes or less)
-            if (aircraft.getFuelRemaining() <= 10) {
+            if (aircraft.getFuelRemaining() <= 10 && aircraft.getStatus() == EmergencyStatus.FUEL_LOW) {
+                diverted.add(aircraft);
+                it.remove();
+            }
+
+            // Divert if wait time > max wait time
+            if (aircraft.getWaitTime(currentTick) >= maxWait) {
                 diverted.add(aircraft);
                 it.remove();
             }

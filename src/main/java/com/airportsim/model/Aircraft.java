@@ -1,10 +1,13 @@
 package com.airportsim.model;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import com.airportsim.viewmodel.AircraftSnapshot;
 import com.airportsim.viewmodel.Snapshot;
 import com.airportsim.viewmodel.SnapshotFactory;
 
 public class Aircraft implements SimulationEventSubject, SnapshotFactory {
+    private final long id;
     private final String callsign;
     private final String operator;
     private final String origin;
@@ -18,6 +21,8 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     private EmergencyStatus status;
     private long actualTime;
 
+    private static final AtomicLong ID_GEN = new AtomicLong(0);
+
     public Aircraft(
             String callsign,
             String operator,
@@ -28,6 +33,7 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
             long scheduledTime,
             long actualTime,
             boolean inbound) {
+        this.id = ID_GEN.getAndIncrement();
         this.callsign = callsign;
         this.operator = operator;
         this.origin = origin;
@@ -125,10 +131,13 @@ public class Aircraft implements SimulationEventSubject, SnapshotFactory {
     @Override
     public Snapshot getSnapshot() {
         return new AircraftSnapshot(
+                id,
                 callsign,
                 operator,
                 origin,
                 destination,
+                groundSpeed,
+                altitude,
                 fuelRemaining,
                 status,
                 scheduledTime,

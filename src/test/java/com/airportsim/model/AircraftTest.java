@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.airportsim.viewmodel.AircraftSnapshot;
 import com.airportsim.viewmodel.Snapshot;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,14 +15,8 @@ class AircraftTest {
     private Aircraft aircraft;
 
     private static final String DEFAULT_CALLSIGN = "BA420";
-    private static final String DEFAULT_OPERATOR = "British Airways";
-    private static final String DEFAULT_ORIGIN = "WED";
-    private static final String DEFAULT_DESTINATION = "LHR";
     private static final long DEFAULT_FUEL = 3600L; // 60 minutes
-    private static final EmergencyStatus DEFAULT_STATUS = EmergencyStatus.NONE;
-    private static final long DEFAULT_SCHEDULED_TIME = 1000L;
     private static final long DEFAULT_ACTUAL_TIME = 1005L;
-    private static final boolean DEFAULT_INBOUND = true;
 
     @BeforeEach
     void setUp() {
@@ -29,42 +24,15 @@ class AircraftTest {
     }
 
     private Aircraft createDefaultAircraft() {
-        return new Aircraft(
-                DEFAULT_CALLSIGN,
-                DEFAULT_OPERATOR,
-                DEFAULT_ORIGIN,
-                DEFAULT_DESTINATION,
-                DEFAULT_FUEL,
-                DEFAULT_STATUS,
-                DEFAULT_SCHEDULED_TIME,
-                DEFAULT_ACTUAL_TIME,
-                DEFAULT_INBOUND);
+        return new AircraftBuilder().build();
     }
 
     private Aircraft createAircraftWithFuel(long fuel) {
-        return new Aircraft(
-                DEFAULT_CALLSIGN,
-                DEFAULT_OPERATOR,
-                DEFAULT_ORIGIN,
-                DEFAULT_DESTINATION,
-                fuel,
-                DEFAULT_STATUS,
-                DEFAULT_SCHEDULED_TIME,
-                DEFAULT_ACTUAL_TIME,
-                DEFAULT_INBOUND);
+        return new AircraftBuilder().withFuel(fuel).build();
     }
 
     private Aircraft createAircraftWithStatus(EmergencyStatus status) {
-        return new Aircraft(
-                DEFAULT_CALLSIGN,
-                DEFAULT_OPERATOR,
-                DEFAULT_ORIGIN,
-                DEFAULT_DESTINATION,
-                DEFAULT_FUEL,
-                status,
-                DEFAULT_SCHEDULED_TIME,
-                DEFAULT_ACTUAL_TIME,
-                DEFAULT_INBOUND);
+        return new AircraftBuilder().withStatus(status).build();
     }
 
     @Nested
