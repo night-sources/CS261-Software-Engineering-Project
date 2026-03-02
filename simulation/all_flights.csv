@@ -1,0 +1,29 @@
+callsign,operator,origin,destination,scheduled_time_minutes,actual_time_minutes,fuel_remaining_minutes,emergency_status,altitude,ground_speed_knots,inbound,flight_type
+SQ1228,Singapore Airlines,COV,DXB,4.00,0.75,50,NONE,2000,180.00,false,departure
+BA7923,British Airways,COV,JFK,8.00,5.67,30,NONE,2000,180.00,false,departure
+U25519,EasyJet,FRA,COV,4.00,9.71,31,NONE,2000,180.00,true,arrival
+LH0755,Lufthansa,COV,JFK,20.00,10.79,47,NONE,2000,180.00,false,departure
+EK1243,Emirates,BCN,COV,12.00,11.05,31,NONE,2000,180.00,true,arrival
+BA9441,British Airways,COV,USA,24.00,12.05,41,NONE,2000,180.00,false,departure
+BA4476,British Airways,MAD,COV,8.00,12.60,46,NONE,2000,180.00,true,arrival
+AF2379,Air France,JFK,COV,20.00,17.55,21,NONE,2000,180.00,true,arrival
+TK3442,Turkish Airlines,COV,EDI,12.00,17.79,23,NONE,2000,180.00,false,departure
+LH2923,Lufthansa,COV,MAD,16.00,19.24,59,NONE,2000,180.00,false,departure
+SQ6730,Singapore Airlines,LHR,COV,16.00,23.43,26,NONE,2000,180.00,true,arrival
+LH6324,Lufthansa,COV,DXB,28.00,24.25,54,PASSENGER_HEALTH,2000,180.00,false,departure
+LH0212,Lufthansa,COV,LHR,32.00,24.31,60,NONE,2000,180.00,false,departure
+EK4059,Emirates,BCN,COV,28.00,24.92,28,NONE,2000,180.00,true,arrival
+FR6935,Ryanair,JFK,COV,24.00,26.75,52,FUEL_LOW,2000,180.00,true,arrival
+BA6601,British Airways,DXB,COV,32.00,26.95,36,NONE,2000,180.00,true,arrival
+SQ1745,Singapore Airlines,COV,LHR,36.00,30.40,42,PASSENGER_HEALTH,2000,180.00,false,departure
+TK2093,Turkish Airlines,LHR,COV,40.00,33.74,27,NONE,2000,180.00,true,arrival
+SQ7978,Singapore Airlines,COV,CDG,40.00,33.83,57,NONE,2000,180.00,false,departure
+U27188,EasyJet,COV,FRA,44.00,37.63,48,NONE,2000,180.00,false,departure
+EK0429,Emirates,JFK,COV,36.00,37.93,32,NONE,2000,180.00,true,arrival
+U24479,EasyJet,SIN,COV,44.00,44.28,48,NONE,2000,180.00,true,arrival
+LS4823,Jet2,BCN,COV,48.00,45.33,49,NONE,2000,180.00,true,arrival
+AF5987,Air France,COV,BCN,56.00,45.95,27,NONE,2000,180.00,false,departure
+EK1911,Emirates,BCN,COV,52.00,46.55,23,NONE,2000,180.00,true,arrival
+AF6780,Air France,COV,CDG,48.00,53.04,21,NONE,2000,180.00,false,departure
+LH7843,Lufthansa,COV,BCN,52.00,59.97,35,NONE,2000,180.00,false,departure
+SQ8104,Singapore Airlines,BCN,COV,56.00,60.00,35,NONE,2000,180.00,true,arrival

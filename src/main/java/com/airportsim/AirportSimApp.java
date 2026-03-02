@@ -7,8 +7,10 @@ import com.airportsim.model.RunwayManager;
 import com.airportsim.model.SimulationEngine;
 import com.airportsim.model.StatisticsManager;
 import com.airportsim.model.TakeoffQueue;
-import com.airportsim.view.MainController;
+import com.airportsim.view.DefaultPageFactory;
+import com.airportsim.view.PageFactory;
 import com.airportsim.view.SimulationRenderer;
+import com.airportsim.view.controllers.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -39,18 +41,15 @@ public class AirportSimApp extends Application {
                 new SimulationEngine(aircraftManager, runwayManager, statisticsManager);
         SimulationRenderer renderer = new SimulationRenderer();
 
-        controller = new MainController(engine, renderer, stage);
+        PageFactory pageFactory = new DefaultPageFactory(); // page factory setup
+
+        controller = new MainController(engine, renderer, stage, pageFactory);
         Scene scene = new Scene(controller.getRootPane(), 1280, 720);
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
 
         stage.setScene(scene);
         stage.setTitle("Airport Traffic Studio");
         stage.show();
-    }
-
-    /** Composition root: creates and wires all dependencies. */
-    private MainController createController() {
-        return null;
     }
 
     /**

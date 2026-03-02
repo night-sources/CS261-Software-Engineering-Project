@@ -1,29 +1,35 @@
 package com.airportsim.view.configuration;
 
-import com.airportsim.view.MainMenuPage;
+import com.airportsim.view.listeners.ConfigurationListener;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Spinner;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 /** Creates the main scenario configuration page where users can set parameters for the sim. */
 public class ConfigurationPage extends BorderPane {
-    private Stage stage;
-
     private Spinner<Integer> inboundFlowSpinner;
     private Spinner<Integer> outboundFlowSpinner;
     private Spinner<Integer> durationSpinner;
     private Spinner<Integer> maxWaitSpinner;
     private ComboBox<String> simTypeCombo;
-
     private VBox runwayListContainer;
     private List<RunwayConfig> runways = new ArrayList<>();
+    private final ConfigurationListener listener;
 
-    public ConfigurationPage(Stage stage) {
-        this.stage = stage;
+    public ConfigurationPage(ConfigurationListener listener) {
+        this.listener = listener;
         this.getStyleClass().add("container");
         setCenter(createMainContent());
     }
@@ -225,8 +231,7 @@ public class ConfigurationPage extends BorderPane {
         backButton.setPrefWidth(180);
         backButton.setOnAction(
                 e -> {
-                    stage.setTitle("Airport Traffic Studio");
-                    stage.getScene().setRoot(new MainMenuPage(stage));
+                    listener.onBackToMainMenu();
                 });
 
         Button startButton = new Button("Start Simulation");
@@ -237,6 +242,8 @@ public class ConfigurationPage extends BorderPane {
                     SimulationConfig config = buildConfig();
 
                     // FOR NOW - PRINT DATA, ULTIMATELY THIS WILL START SIM ENGINE
+                    // listener.onLoadScenario(config); Sends signal to start new scenario
+
                     System.out.println("=== Simulation Configuration ===");
                     System.out.println("Inbound Flow: " + config.inboundFlow + " flights/hour");
                     System.out.println("Outbound Flow: " + config.outboundFlow + " flights/hour");

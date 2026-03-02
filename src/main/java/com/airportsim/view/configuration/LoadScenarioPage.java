@@ -1,15 +1,16 @@
 package com.airportsim.view.configuration;
 
-import com.airportsim.view.MainMenuPage;
+import com.airportsim.view.listeners.ConfigurationListener;
 import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Creates the page where users can load previous scenario parameters from CSV files. Just shows a
@@ -19,13 +20,12 @@ import javafx.stage.Stage;
  * start the sim with those parameters.
  */
 public class LoadScenarioPage extends BorderPane {
-
-    private Stage stage;
     private Label selectedFileLabel;
     private File selectedFile;
+    private final ConfigurationListener listener;
 
-    public LoadScenarioPage(Stage stage) {
-        this.stage = stage;
+    public LoadScenarioPage(ConfigurationListener listener) {
+        this.listener = listener;
         this.getStyleClass().add("container");
         setCenter(createMainContent());
     }
@@ -58,7 +58,7 @@ public class LoadScenarioPage extends BorderPane {
         Button browseButton = new Button("Browse Files...");
         browseButton.getStyleClass().add("button-secondary");
         browseButton.setPrefWidth(200);
-        browseButton.setOnAction(e -> handleBrowse());
+        browseButton.setOnAction(e -> listener.onBrowseFile(this));
 
         selectedFileLabel = new Label("No file selected");
         selectedFileLabel.getStyleClass().add("file-label");
@@ -105,18 +105,9 @@ public class LoadScenarioPage extends BorderPane {
         return panel;
     }
 
-    private void handleBrowse() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Scenario File");
-
-        // only CSV files allowed
-        fileChooser
-                .getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-
-        File file = fileChooser.showOpenDialog(stage);
+    public void setSelectedFile(File file) {
         if (file != null) {
-            selectedFile = file;
+            this.selectedFile = file;
             selectedFileLabel.setText(file.getName());
             selectedFileLabel.getStyleClass().remove("file-label");
             selectedFileLabel.getStyleClass().add("file-label-selected");
@@ -132,8 +123,7 @@ public class LoadScenarioPage extends BorderPane {
         backButton.setPrefWidth(180);
         backButton.setOnAction(
                 e -> {
-                    stage.setTitle("Airport Traffic Studio");
-                    stage.getScene().setRoot(new MainMenuPage(stage));
+                    listener.onBackToMainMenu();
                 });
 
         Button loadButton = new Button("Load Scenario");
@@ -142,9 +132,7 @@ public class LoadScenarioPage extends BorderPane {
         loadButton.setOnAction(
                 e -> {
                     if (selectedFile != null) {
-                        // Do something here i guess - need to figure out what the csv will look
-                        // like
-                        stage.setTitle("Configuration Page");
+                        listener.onLoadScenario(selectedFile);
                     }
                 });
 

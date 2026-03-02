@@ -1,0 +1,15 @@
+callsign,operator,origin,destination,scheduled_time_minutes,actual_time_minutes,fuel_remaining_minutes,emergency_status,altitude,ground_speed_knots,inbound,flight_type
+U25519,EasyJet,FRA,COV,4.00,9.71,31,NONE,2000,180.00,true,arrival
+EK1243,Emirates,BCN,COV,12.00,11.05,31,NONE,2000,180.00,true,arrival
+BA4476,British Airways,MAD,COV,8.00,12.60,46,NONE,2000,180.00,true,arrival
+AF2379,Air France,JFK,COV,20.00,17.55,21,NONE,2000,180.00,true,arrival
+SQ6730,Singapore Airlines,LHR,COV,16.00,23.43,26,NONE,2000,180.00,true,arrival
+EK4059,Emirates,BCN,COV,28.00,24.92,28,NONE,2000,180.00,true,arrival
+FR6935,Ryanair,JFK,COV,24.00,26.75,52,FUEL_LOW,2000,180.00,true,arrival
+BA6601,British Airways,DXB,COV,32.00,26.95,36,NONE,2000,180.00,true,arrival
+TK2093,Turkish Airlines,LHR,COV,40.00,33.74,27,NONE,2000,180.00,true,arrival
+EK0429,Emirates,JFK,COV,36.00,37.93,32,NONE,2000,180.00,true,arrival
+U24479,EasyJet,SIN,COV,44.00,44.28,48,NONE,2000,180.00,true,arrival
+LS4823,Jet2,BCN,COV,48.00,45.33,49,NONE,2000,180.00,true,arrival
+EK1911,Emirates,BCN,COV,52.00,46.55,23,NONE,2000,180.00,true,arrival
+SQ8104,Singapore Airlines,BCN,COV,56.00,60.00,35,NONE,2000,180.00,true,arrival
